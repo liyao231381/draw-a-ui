@@ -15,6 +15,20 @@ const Tldraw = dynamic(async () => (await import("@tldraw/tldraw")).Tldraw, {
 
 export default function Home() {
   const [html, setHtml] = useState<null | string>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 640); // 640px 及以下为移动设备
+    };
+
+    handleResize(); // 初始化状态
+
+    window.addEventListener('resize', handleResize); // 监听窗口大小变化
+    return () => {
+      window.removeEventListener('resize', handleResize); // 清理事件监听器
+    };
+  }, []);
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
@@ -27,13 +41,13 @@ export default function Home() {
     return () => {
       window.removeEventListener("keydown", listener);
     };
-  });
+  }, []);
 
   return (
     <>
       <div className={`w-screen h-screen`}>
         <Tldraw persistenceKey="tldraw">
-          <ExportButton setHtml={setHtml} />
+          <ExportButton setHtml={setHtml} isMobile={isMobile} />
         </Tldraw>
       </div>
       {html &&
@@ -51,10 +65,10 @@ export default function Home() {
   );
 }
 
-function ExportButton({ setHtml }: { setHtml: (html: string) => void }) {
+function ExportButton({ setHtml, isMobile }: { setHtml: (html: string) => void; isMobile: boolean }) {
   const editor = useEditor();
   const [loading, setLoading] = useState(false);
-  // A tailwind styled button that is pinned to the bottom right of the screen
+
   return (
     <button
       onClick={async (e) => {
@@ -97,7 +111,7 @@ function ExportButton({ setHtml }: { setHtml: (html: string) => void }) {
           setLoading(false);
         }
       }}
-      className="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ="
+      className={`fixed right-2 ${isMobile ? 'top-2' : 'bottom-4'} bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded`}
       style={{ zIndex: 1000 }}
       disabled={loading}
     >
@@ -106,7 +120,7 @@ function ExportButton({ setHtml }: { setHtml: (html: string) => void }) {
           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
         </div>
       ) : (
-        "Make Real"
+        "转换为 HTML"
       )}
     </button>
   );
