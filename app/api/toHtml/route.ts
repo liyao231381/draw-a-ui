@@ -1,8 +1,8 @@
 import { OpenAI } from "openai";
 
 // 从环境变量中获取 API URL 和 API 密钥
-const OPENAI_API_URL = process.env.OPENAI_API_URL; // 从环境变量中获取自定义 API URL
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // 从环境变量中获取 API 密钥
+const OPENAI_API_URL = "https://free.v36.cm/v1"; // 从环境变量中获取自定义 API URL
+const OPENAI_API_KEY = "sk-S26fjgKnbfujt6Ux61C85330604747Df983aFe93Ab5aC666"; // 从环境变量中获取 API 密钥
 
 const systemPrompt = `You are an expert Tailwind developer with a strong understanding of web design principles. 
 A user will provide you with a low-fidelity wireframe of an application. Your task is to return a single HTML file 

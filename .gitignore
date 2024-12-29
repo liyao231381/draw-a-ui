@@ -13,6 +13,9 @@
 /.next/
 /out/
 
+# api
+/app/api/toHtml/route.ts
+
 # production
 /build
 
