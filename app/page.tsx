@@ -13,10 +13,15 @@ const Tldraw = dynamic(async () => (await import("@tldraw/tldraw")).Tldraw, {
   ssr: false,
 });
 
+interface HistoryItem {
+  time: string;
+  html: string;
+}
+
 export default function Home() {
   const [html, setHtml] = useState<null | string>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [history, setHistory] = useState<{ time: string; html: string }[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
   const [showHistory, setShowHistory] = useState(false);
 
   // 从 localStorage 加载历史记录
@@ -94,7 +99,25 @@ export default function Home() {
               }}>
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-bold">历史记录</h2>
-              <button onClick={() => setShowHistory(false)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">关闭</button>
+                <button onClick={() => setShowHistory(false)} 
+                className="text-gray-600 hover:text-gray-800 focus:outline-none"
+                >
+                <svg
+                  className="w-6 h-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+                </button>
             </div>
             <ul>
               {history.map((item, index) => (
@@ -110,7 +133,7 @@ export default function Home() {
   );
 }
 
-function ExportButton({ setHtml, isMobile, setHistory }: { setHtml: (html: string) => void; isMobile: boolean; setHistory: (history: { time: string; html: string }[]) => void }) {
+function ExportButton({ setHtml, isMobile, setHistory }: { setHtml: (html: string) => void; isMobile: boolean; setHistory: (history: HistoryItem[]) => void }) {
   const editor = useEditor();
   const [loading, setLoading] = useState(false);
 
@@ -165,7 +188,7 @@ function ExportButton({ setHtml, isMobile, setHistory }: { setHtml: (html: strin
 
           // 更新历史记录
           setHistory(prev => {
-            const newHistory = [...prev, { time: currentTime, html }];
+            const newHistory: HistoryItem[] = [...prev, { time: currentTime, html }];
             localStorage.setItem("history", JSON.stringify(newHistory)); // 更新 localStorage
             return newHistory; // 返回新的历史记录
           });
