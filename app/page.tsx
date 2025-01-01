@@ -76,27 +76,27 @@ export default function Home() {
             className={`fixed right-8 ${isMobile ? 'top-2' : 'bottom-4'} bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-1 mr-1 rounded`}
             style={{ zIndex: 1000 }}
           >
-          <svg
-            className="w-4 h-4"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 8v4l2 2"
-            ></path>
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M12 2a10 10 0 100 20 10 10 0 000-20z"
-            ></path>
-          </svg>
+            <svg
+              className="w-4 h-4"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 8v4l2 2"
+              ></path>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 2a10 10 0 100 20 10 10 0 000-20z"
+              ></path>
+            </svg>
           </button>
         </Tldraw>
       </div>
@@ -113,15 +113,15 @@ export default function Home() {
       {showHistory && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center" style={{ zIndex: 2000, backgroundColor: "rgba(0,0,0,0.5)" }}>
           <div className="bg-white p-4 rounded shadow-md"
-              style={{
-                width: "calc(100% - 64px)",
-                height: "calc(100% - 64px)",
-              }}>
+            style={{
+              width: "calc(100% - 64px)",
+              height: "calc(100% - 64px)",
+            }}>
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-bold">历史记录</h2>
-                <button onClick={() => setShowHistory(false)} 
+              <button onClick={() => setShowHistory(false)}
                 className="text-gray-600 hover:text-gray-800 focus:outline-none"
-                >
+              >
                 <svg
                   className="w-6 h-6"
                   xmlns="http://www.w3.org/2000/svg"
@@ -131,21 +131,23 @@ export default function Home() {
                   aria-hidden="true"
                 >
                   <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
                   ></path>
                 </svg>
-                </button>
+              </button>
             </div>
-            <ul>
-              {history.map((item, index) => (
-                <li key={index} className="border-b py-2 cursor-pointer" onClick={() => setHtml(item.html)}>
-                  {item.time}
-                </li>
-              ))}
-            </ul>
+            <div className="overflow-y-auto" style={{ maxHeight: "calc(100% - 64px)" }}>
+              <ul>
+                {history.map((item, index) => (
+                  <li key={index} className="border-b py-2 cursor-pointer" onClick={() => setHtml(item.html)}>
+                    {item.time}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       )}
