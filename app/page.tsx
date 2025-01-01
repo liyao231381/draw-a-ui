@@ -187,7 +187,7 @@ function ExportButton({ setHtml, isMobile, setHistory }: { setHtml: (html: strin
           });
 
           // 更新历史记录
-          setHistory((prev: HistoryItem[]) => { // 显式指定 prev 的类型
+          setHistory(prev => {
             const newHistory: HistoryItem[] = [...prev, { time: currentTime, html }];
             localStorage.setItem("history", JSON.stringify(newHistory)); // 更新 localStorage
             return newHistory; // 返回新的历史记录
