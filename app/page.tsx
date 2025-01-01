@@ -70,7 +70,7 @@ export default function Home() {
     <>
       <div className={`w-screen h-screen`}>
         <Tldraw persistenceKey="tldraw">
-          <ExportButton setHtml={setHtml} isMobile={isMobile} setHistory={setHistory} />
+          <ExportButton setHtml={setHtml} isMobile={isMobile} setHistory={setHistory} history={history} />
           <button
             onClick={() => setShowHistory(!showHistory)}
             className={`fixed right-12 ${isMobile ? 'top-2' : 'bottom-4'} bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded`}
@@ -133,7 +133,7 @@ export default function Home() {
   );
 }
 
-function ExportButton({ setHtml, isMobile, setHistory }: { setHtml: (html: string) => void; isMobile: boolean; setHistory: (history: HistoryItem[]) => void }) {
+function ExportButton({ setHtml, isMobile, setHistory, history }: { setHtml: (html: string) => void; isMobile: boolean; setHistory: (history: HistoryItem[]) => void; history: HistoryItem[] }) {
   const editor = useEditor();
   const [loading, setLoading] = useState(false);
 
@@ -187,11 +187,9 @@ function ExportButton({ setHtml, isMobile, setHistory }: { setHtml: (html: strin
           });
 
           // 更新历史记录
-          setHistory(prev => {
-            const newHistory: HistoryItem[] = [...prev, { time: currentTime, html }];
-            localStorage.setItem("history", JSON.stringify(newHistory)); // 更新 localStorage
-            return newHistory; // 返回新的历史记录
-          });
+          const newHistory: HistoryItem[] = [...history, { time: currentTime, html }];
+          setHistory(newHistory);
+          localStorage.setItem("history", JSON.stringify(newHistory)); // 更新 localStorage
         } finally {
           setLoading(false);
         }
