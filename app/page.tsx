@@ -66,6 +66,12 @@ export default function Home() {
     localStorage.setItem("history", JSON.stringify(history)); // 将历史记录保存到 localStorage
   }, [history]);
 
+  // 删除历史记录
+  const deleteHistoryItem = (index: number) => {
+    const newHistory = history.filter((_, i) => i !== index);
+    setHistory(newHistory);
+  };
+
   return (
     <>
       <div className={`w-screen h-screen`}>
@@ -142,8 +148,27 @@ export default function Home() {
             <div className="overflow-y-auto" style={{ maxHeight: "calc(100% - 64px)" }}>
               <ul>
                 {history.map((item, index) => (
-                  <li key={index} className="border-b py-2 cursor-pointer" onClick={() => setHtml(item.html)}>
-                    {item.time}
+                  <li key={index} className="border-b py-2 flex justify-between items-center">
+                    <span className="cursor-pointer" onClick={() => setHtml(item.html)}>
+                      {item.time}
+                    </span>
+                    <button onClick={() => deleteHistoryItem(index)} className="ml-2">
+                      <svg
+                        className="w-4 h-4 text-red-500 hover:text-red-700"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        ></path>
+                      </svg>
+                    </button>
                   </li>
                 ))}
               </ul>
