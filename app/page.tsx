@@ -73,10 +73,30 @@ export default function Home() {
           <ExportButton setHtml={setHtml} isMobile={isMobile} setHistory={setHistory} history={history} />
           <button
             onClick={() => setShowHistory(!showHistory)}
-            className={`fixed right-12 ${isMobile ? 'top-2' : 'bottom-4'} bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded`}
+            className={`fixed right-8 ${isMobile ? 'top-2' : 'bottom-4'} bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-1 mr-1 rounded`}
             style={{ zIndex: 1000 }}
           >
-            历史记录
+          <svg
+            className="w-4 h-4"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 8v4l2 2"
+            ></path>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 2a10 10 0 100 20 10 10 0 000-20z"
+            ></path>
+          </svg>
           </button>
         </Tldraw>
       </div>
@@ -194,7 +214,7 @@ function ExportButton({ setHtml, isMobile, setHistory, history }: { setHtml: (ht
           setLoading(false);
         }
       }}
-      className={`fixed right-2 ${isMobile ? 'top-2' : 'bottom-4'} bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded`}
+      className={`fixed right-2 ${isMobile ? 'top-2' : 'bottom-4'} bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded`}
       style={{ zIndex: 1000 }}
       disabled={loading}
     >
@@ -203,7 +223,7 @@ function ExportButton({ setHtml, isMobile, setHistory, history }: { setHtml: (ht
           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
         </div>
       ) : (
-        "生成"
+        "Go"
       )}
     </button>
   );
