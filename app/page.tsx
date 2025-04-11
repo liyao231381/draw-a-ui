@@ -9,9 +9,7 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { PreviewModal } from "@/components/PreviewModal";
 
-const Tldraw = dynamic(async () => (await import("@tldraw/tldraw")).Tldraw, {
-  ssr: false,
-});
+const Tldraw = dynamic(async () => (await import("@tldraw/tldraw")).Tldraw);
 
 interface HistoryItem {
   time: string;
@@ -26,9 +24,11 @@ export default function Home() {
 
   // 从 localStorage 加载历史记录
   useEffect(() => {
-    const savedHistory = localStorage.getItem("history");
-    if (savedHistory) {
-      setHistory(JSON.parse(savedHistory)); // 解析并设置历史记录
+    if (typeof window !== 'undefined') {
+      const savedHistory = localStorage.getItem("history");
+      if (savedHistory) {
+        setHistory(JSON.parse(savedHistory)); // 解析并设置历史记录
+      }
     }
   }, []);
 
@@ -63,7 +63,9 @@ export default function Home() {
 
   // 更新 localStorage 中的历史记录
   useEffect(() => {
-    localStorage.setItem("history", JSON.stringify(history)); // 将历史记录保存到 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("history", JSON.stringify(history)); // 将历史记录保存到 localStorage
+    }
   }, [history]);
 
   // 删除历史记录
@@ -106,15 +108,14 @@ export default function Home() {
           </button>
         </Tldraw>
       </div>
-      {html && ReactDOM.createPortal(
+      {html && (
         <div
           className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center"
           style={{ zIndex: 2000, backgroundColor: "rgba(0,0,0,0.5)" }}
           onClick={() => setHtml(null)}
         >
           <PreviewModal html={html} setHtml={setHtml} />
-        </div>,
-        document.body
+        </div>
       )}
       {showHistory && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center" style={{ zIndex: 2000, backgroundColor: "rgba(0,0,0,0.5)" }}>
