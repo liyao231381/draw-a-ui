@@ -1,8 +1,8 @@
 import { OpenAI } from "openai";
 
 // 从环境变量中获取 API URL 和 API 密钥
-const OPENAI_API_URL = "https://free.v36.cm/v1"; // 从环境变量中获取自定义 API URL
-const OPENAI_API_KEY = "sk-S26fjgKnbfujt6Ux61C85330604747Df983aFe93Ab5aC666"; // 从环境变量中获取 API 密钥
+const OPENAI_API_URL = "https://gemini.liyao.sbs/v1"; // 从环境变量中获取自定义 API URL
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // 从环境变量中获取 API 密钥
 
 const systemPrompt = `You have perfect vision and pay great attention to detail which makes you an expert at building single page apps using Tailwind, HTML, react, alpine.js, jquery and JS.
 You take screenshots of a reference web page from the user, and then build single page apps using Tailwind, HTML, react, alpine.js, jquery and JS.
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     const { image } = await request.json();
 
     const resp = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gemini-2.0-flash-exp",
       max_tokens: 4096,
       messages: [
         {
